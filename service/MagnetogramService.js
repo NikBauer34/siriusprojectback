@@ -1,4 +1,4 @@
-import ApiError from '../exceptions/api-error';
+import ApiError from '../exceptions/api-error.js';
 import MagnetogramModel from '../models/MagnetogramModel.js'
 import PipeService from './PipeService.js';
 class MagnetogramService {
@@ -9,18 +9,24 @@ class MagnetogramService {
     }
     return magnetogram
   }
-  async getAllMagnetograms(pipe_id) {
-    const pipe = await MagnetogramModel.findById(pipe_id);
-    return pipe.author
+  async getAllMagnetograms() {
+    const pipes = await MagnetogramModel.find({});
+    if (!pipes) {
+      throw ApiError.BadRequest('Магнитограмм нет')
+    }
+    return pipes
   }
-  async createMagnetogram(date, author, pipe, pipe_id) {
+  async createMagnetogram(date, author, pipe_id) {
     const array = [1, 2, 3]
-    const magnetogram = await MagnetogramModel.create({date, array, author, pipe})
+    const magnetogram = await MagnetogramModel.create({date, array, author, pipe: pipe_id})
     const new_pipe = await PipeService.newMagnetogram(pipe_id, magnetogram._id)
-    return new_pipe
+    return magnetogram
   }
   async deleteMagnetogram(id) {
     const magnetogram = await MagnetogramModel.findByIdAndDelete(id)
+    if (!magnetogram) {
+      throw ApiError.BadRequest('Не найдена магнитограмма')
+    }
     return magnetogram
   }
 }
