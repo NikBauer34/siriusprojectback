@@ -6,7 +6,8 @@ import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import router from "./router/routing.js";
 import errorMiddleware from "./middlewares/error-middleware.js";
-
+import swaggerJSDoc from 'swagger-jsdoc'
+import swaggerUI from 'swagger-ui-express'
 const PORT = process.env.PORT || 5000;
 const app = express();
 
@@ -17,6 +18,21 @@ const corsOptions ={
   credentials:true,            //access-control-allow-credentials:true
   optionSuccessStatus:200,
 }
+const swaggerOptions = {
+  swaggerDefinition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Node js api project for "Газпром"',
+      version: '1.0.0'
+    },
+    servers: {
+      url: process.env.API_URL + PORT
+    }
+  },
+  apis: ['index.js']
+}
+const swaggerSpec = swaggerJSDoc(swaggerOptions)
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
 app.use(cors(corsOptions));
 app.use('/', router)
 app.use(errorMiddleware)
