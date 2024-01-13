@@ -6,23 +6,23 @@ import TokenService from "./TokenService.js";
 
 class UserService {
   async registration(name, surname, nikname, password, role) {
-    const candidate = await UserModel.findOne({nikname});
+    const candidate = await UserModel.findOne({ nikname });
     if (candidate) {
       throw ApiError.BadRequest(`Пользователь с ником ${nikname} существует`)
     }
     console.log(candidate)
     const hashPassword = bcrypt.hashSync(password, 3);
     console.log(hashPassword)
-    const user = await UserModel.create({name, surname, nikname, password: hashPassword, role, requests: []})
+    const user = await UserModel.create({ name, surname, nikname, password: hashPassword, role, requests: [] })
     console.log(user)
     const userDto = new UserDto(user);
-    const tokens = TokenService.generateTokens({...userDto});
+    const tokens = TokenService.generateTokens({ ...userDto });
     await TokenService.saveToken(userDto.user_id, tokens.refreshToken);
 
-    return {...tokens, user: userDto}
+    return { ...tokens, user: userDto }
   }
   async login(nikname, password) {
-    const user = await UserModel.findOne({nikname});
+    const user = await UserModel.findOne({ nikname });
     if (!user) {
       throw ApiError.BadRequest('Пользователь с таким никнеймом не найден')
     }
@@ -31,9 +31,9 @@ class UserService {
       throw ApiError.BadRequest('Неверный пароль');
     }
     const userDto = new UserDto(user);
-    const tokens = TokenService.generateTokens({...userDto});
+    const tokens = TokenService.generateTokens({ ...userDto });
     await TokenService.saveToken(userDto.user_id, tokens.refreshToken);
-    return {...tokens, user: userDto}
+    return { ...tokens, user: userDto }
   }
   async logout(refreshToken) {
     const token = await TokenService.removeToken(refreshToken);
@@ -51,13 +51,13 @@ class UserService {
     }
     const user = await UserModel.findById(userData.user_id);
     const userDto = new UserDto(user);
-    const tokens = TokenService.generateTokens({...userDto})
+    const tokens = TokenService.generateTokens({ ...userDto })
 
     await TokenService.saveToken(userDto.user_id, tokens.refreshToken);
-    return {...tokens, user: userDto}
+    return { ...tokens, user: userDto }
   }
   async getUserIdByNikname(nikname) {
-    const user = await UserModel.findOne({nikname})
+    const user = await UserModel.findOne({ nikname })
     return user._id
   }
 }
