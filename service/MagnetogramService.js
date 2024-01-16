@@ -16,9 +16,9 @@ class MagnetogramService {
     }
     return pipes
   }
-  async createMagnetogram(date, author, pipe_id) {
+  async createMagnetogram(date, author, pipe_id, version) {
     const array = [1, 2, 3]
-    const magnetogram = await MagnetogramModel.create({date, array, author, pipe: pipe_id})
+    const magnetogram = await MagnetogramModel.create({date, info: {version: '', array: []}, author, pipe: pipe_id})
     const new_pipe = await PipeService.newMagnetogram(pipe_id, magnetogram._id)
     return magnetogram
   }

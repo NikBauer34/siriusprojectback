@@ -2,7 +2,10 @@ import { Schema, model } from "mongoose";
 
 const MagnetogramSchema = new Schema({
   date: {type: Date},
-  array: [{type: Number}],
+  info: {
+    version: {type: String},
+    markup: [[{type: Number}]],
+  },
   author: {type: Schema.Types.ObjectId, ref: 'User'},
   pipe: {type: Schema.Types.ObjectId, ref: 'Pipe'}
 })

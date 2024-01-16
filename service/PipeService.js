@@ -9,6 +9,21 @@ class PipeService {
     }
     return pipe
   }
+  async newUserPipe(pipe_id, user_id) {
+    const pipe = await PipeModel.findById(pipe_id);
+    if (!pipe) {
+      throw ApiError.BadRequest('Не найдена труба')
+    }
+    const user = await UserModel.findById(user_id)
+    if (!user) {
+      throw ApiError.BadRequest('Не найден пользователь')
+    }
+    pipe.users.push(user_id)
+    user.pipes.push(pipe_id)
+    await PipeModel.findByIdAndUpdate(pipe_id, pipe),
+    await UserModel.findByIdAndUpdate(user_id, user)
+    console.log(user, pipe)
+  }
   async getPipeByUserId(user_id) {
     const user = await UserModel.findById(user_id)
     if (!user) {

@@ -14,6 +14,13 @@ class PipeController {
       next(e)
     }
   }
+  async newUserPipe(req, res, next) {
+    const {_id} = req.body
+    const authorizationHeader = req.headers.authorization;
+    const accessToken = authorizationHeader.split(' ')[1];
+    const userData = TokenService.validateAccessToken(accessToken);
+    await PipeService.newUserPipe(_id, userData.user_id)
+  }
   async getPipe(req, res, next) {
     try {
       const id = req.params.id
