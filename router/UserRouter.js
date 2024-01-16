@@ -7,6 +7,6 @@ const UserRouter = new Router()
 UserRouter.post('/registration', UserController.registration)
 UserRouter.post('/login', UserController.login)
 UserRouter.post('/logout', UserController.logout)
-UserRouter.get('/rolecheck', roleMiddleware(['вторая ступень']), UserController.RoleCheck)
+UserRouter.get('/rolecheck', roleMiddleware(['Начальник']), UserController.RoleCheck)
 UserRouter.get('/authcheck', authMiddleware, UserController.AuthCheck)
 export default UserRouter

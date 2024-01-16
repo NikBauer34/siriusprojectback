@@ -3,7 +3,8 @@ import UserService from "../service/UserService.js"
 class UserController {
   async registration(req, res, next) {
     try {
-      const { name, surname, nikname, password, role } = req.body
+      const { name, surname, nikname, password, role } = req.body;
+
       const userData = await UserService.registration(name, surname, nikname, password, role);
       res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
       return res.json(userData);
