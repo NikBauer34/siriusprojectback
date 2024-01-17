@@ -20,11 +20,11 @@ class MagnetogramController {
   }
   async createMagnetogram(req, res, next) {
     try {
-      const {date, pipe_id} = req.body
+      const {pipe_id, version, title} = req.body
       const authorizationHeader = req.headers.authorization;
       const accessToken = authorizationHeader.split(' ')[1];
       const userData = TokenService.validateAccessToken(accessToken);
-      const magnetogram = await MagnetogramService.createMagnetogram(date, userData.user_id, pipe_id)
+      const magnetogram = await MagnetogramService.createMagnetogram(userData.user_id, pipe_id, version, title)
       return res.json(magnetogram)
     } catch (e) {
       next(e)

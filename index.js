@@ -31,8 +31,8 @@ const swaggerOptions = {
   },
   apis: ['index.js']
 }
-const swaggerSpec = swaggerJSDoc(swaggerOptions)
-app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
+// const swaggerSpec = swaggerJSDoc(swaggerOptions)
+// app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
 app.use(cors(corsOptions));
 app.use('/', router)
 app.use(errorMiddleware)
