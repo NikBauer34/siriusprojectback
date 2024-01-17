@@ -10,7 +10,7 @@ class UserService {
     if (candidate) {
       throw ApiError.BadRequest(`Пользователь с ником ${nikname} существует`)
     }
-    const hashPassword = bcrypt.hashSync(password, 20);
+    const hashPassword = bcrypt.hashSync(password, 8);
     const user = await UserModel.create({ name, surname, nikname, password: hashPassword, role, requests: [], pipes: [] })
     console.log(user)
     const userDto = new UserDto(user);

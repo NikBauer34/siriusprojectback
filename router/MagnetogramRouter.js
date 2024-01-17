@@ -8,4 +8,4 @@ MagnetogramRouter.get('/get_magnetogram/:id', authMiddleware, MagnetogramControl
 MagnetogramRouter.get('/get_magnetograms', authMiddleware, MagnetogramController.getAllMagnetograms)
 MagnetogramRouter.delete('/delete_magnetogram/:id', authMiddleware, MagnetogramController.deleteMagnetogram)
 
-export default MagnetogramRouter
+export default MagnetogramRouter;
