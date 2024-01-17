@@ -29,7 +29,7 @@ class PipeService {
     if (!user) {
       throw ApiError.BadRequest('Не найден пользователь')
     }
-    return user.pipe
+    return user.pipes
   }
   async getAllPipes(){
     const pipes = await PipeModel.find({})
@@ -38,14 +38,14 @@ class PipeService {
     }
     return pipes
   }
-  async createPipe(location, user_id) {
+  async createPipe(location, title, user_id) {
     const pipe = await PipeModel.create({location})
     const user = await UserModel.findById(user_id)
     //console.log(pipe)
     // if (user.pipe[0] == pipe._id) {
     //   throw ApiError.BadRequest('У пользователя уже есть труба')
     // }
-    user.pipe = pipe._id
+    user.pipes.push(pipe._id)
     pipe.users.push(user._id)
     await UserModel.findByIdAndUpdate(user._id, user)
     await PipeModel.findByIdAndUpdate(pipe._id, pipe)
