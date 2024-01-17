@@ -3,12 +3,12 @@ import TokenService from "../service/TokenService.js";
 class PipeController {
   async createPipe(req, res, next) {
     try {
-      const {location} = req.body
+      const {location, title} = req.body
       console.log(location)
       const authorizationHeader = req.headers.authorization;
       const accessToken = authorizationHeader.split(' ')[1];
       const userData = TokenService.validateAccessToken(accessToken);
-      const pipe = await PipeService.createPipe(location, userData.user_id)
+      const pipe = await PipeService.createPipe(location, title, userData.user_id)
       return res.json(pipe)
     } catch (e) {
       next(e)
