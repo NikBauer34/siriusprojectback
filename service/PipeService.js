@@ -1,6 +1,7 @@
 import ApiError from '../exceptions/api-error.js';
 import PipeModel from '../models/PipeModel.js'
 import UserModel from '../models/UserModel.js';
+import MagnetogramService from './MagnetogramService.js';
 class PipeService {
   async getPipe(id) {
     const pipe = await PipeModel.findById(id);
@@ -23,6 +24,33 @@ class PipeService {
     await PipeModel.findByIdAndUpdate(pipe_id, pipe),
     await UserModel.findByIdAndUpdate(user_id, user)
     console.log(user, pipe)
+  }
+  async getPipeStatistics(pipe_id) {
+    const pipe = await PipeModel.findById(pipe_id)
+    if (!pipe) {
+      throw ApiError.BadRequest('Не найдена труба')
+    }
+    const data = [
+      {month: 'Январь', 'Дефекты': 0},
+      {month: 'Февраль', 'Дефекты': 0},
+      {month: 'Март', 'Дефекты': 0},
+      {month: 'Апрель', 'Дефекты': 0},
+      {month: 'Май', 'Дефекты': 0},
+      {month: 'Июнь', 'Дефекты': 0},
+      {month: 'Июль', 'Дефекты': 0},
+      {month: 'Август', 'Дефекты': 0},
+      {month: 'Сентябрь', 'Дефекты': 0},
+      {month: 'Октябрь', 'Дефекты': 0},
+      {month: 'Ноябрь', 'Дефекты': 0},
+      {month: 'Декабрь', 'Дефекты': 0}
+    ]
+    let magnetogramData, magnetogramMonth;
+    for (let magnetogram of pipe.magnetograms) {
+      magnetogramData = await MagnetogramService.getMagnetogram(magnetogram)
+      magnetogramMonth = magnetogramData.info[0].date.getMonth()
+      data[magnetogramMonth]['Дефекты'] += magnetogramData.info[0].defects_count
+    }
+    return data
   }
   async getPipeByUserId(user_id) {
     const user = await UserModel.findById(user_id)

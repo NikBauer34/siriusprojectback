@@ -10,6 +10,7 @@ PipeRouter.get('/get_pipe_user', authMiddleware, PipeController.getPipeByUserId)
 PipeRouter.get('/get_pipes', authMiddleware, PipeController.getAllPipes)
 PipeRouter.post('/new_member/:id', authMiddleware, PipeController.newMember)
 PipeRouter.post('/new_user_pipe', authMiddleware, PipeController.newUserPipe)
+PipeRouter.get('/get_pipe_statistics', authMiddleware, PipeController.getPipeStatistics)
 PipeRouter.delete('/delete_pipe/:id', roleMiddleware(['Начальник']), PipeController.deletePipe)
 
 export default PipeRouter;
