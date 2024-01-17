@@ -19,7 +19,8 @@ class PipeController {
     const authorizationHeader = req.headers.authorization;
     const accessToken = authorizationHeader.split(' ')[1];
     const userData = TokenService.validateAccessToken(accessToken);
-    await PipeService.newUserPipe(_id, userData.user_id)
+    const pipe = await PipeService.newUserPipe(_id, userData.user_id)
+    return res.json(pipe)
   }
   async getPipeStatistics(req, res, next) {
     const {pipe_id} = req.body

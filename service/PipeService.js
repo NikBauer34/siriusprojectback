@@ -24,6 +24,7 @@ class PipeService {
     await PipeModel.findByIdAndUpdate(pipe_id, pipe),
     await UserModel.findByIdAndUpdate(user_id, user)
     console.log(user, pipe)
+    return pipe
   }
   async getPipeStatistics(pipe_id) {
     const pipe = await PipeModel.findById(pipe_id)
