@@ -31,24 +31,24 @@ class PipeService {
       throw ApiError.BadRequest('Не найдена труба')
     }
     const data = [
-      {month: 'Январь', 'Дефекты': 0},
-      {month: 'Февраль', 'Дефекты': 0},
-      {month: 'Март', 'Дефекты': 0},
-      {month: 'Апрель', 'Дефекты': 0},
-      {month: 'Май', 'Дефекты': 0},
-      {month: 'Июнь', 'Дефекты': 0},
-      {month: 'Июль', 'Дефекты': 0},
-      {month: 'Август', 'Дефекты': 0},
-      {month: 'Сентябрь', 'Дефекты': 0},
-      {month: 'Октябрь', 'Дефекты': 0},
-      {month: 'Ноябрь', 'Дефекты': 0},
-      {month: 'Декабрь', 'Дефекты': 0}
+      {month: 'Январь', defects: 0},
+      {month: 'Февраль', defects: 0},
+      {month: 'Март', defects: 0},
+      {month: 'Апрель', defects: 0},
+      {month: 'Май', defects: 0},
+      {month: 'Июнь', defects: 0},
+      {month: 'Июль', defects: 0},
+      {month: 'Август', defects: 0},
+      {month: 'Сентябрь', defects: 0},
+      {month: 'Октябрь', defects: 0},
+      {month: 'Ноябрь', defects: 0},
+      {month: 'Декабрь', defects: 0}
     ]
     let magnetogramData, magnetogramMonth;
     for (let magnetogram of pipe.magnetograms) {
       magnetogramData = await MagnetogramService.getMagnetogram(magnetogram)
       magnetogramMonth = magnetogramData.info[0].date.getMonth()
-      data[magnetogramMonth]['Дефекты'] += magnetogramData.info[0].defects_count
+      data[magnetogramMonth].defects += magnetogramData.info[0].defects_count
     }
     return data
   }
