@@ -58,7 +58,14 @@ class PipeService {
     if (!user) {
       throw ApiError.BadRequest('Не найден пользователь')
     }
-    return user.pipes
+    console.log('Here')
+    let userpipes = []
+    for (let pipe in user.pipes) {
+      let userpipe = await PipeModel.findById(user.pipes[Number(pipe)])
+      userpipes.push(userpipe)
+    }
+    console.log(userpipes)
+    return userpipes
   }
   async getAllPipes(){
     const pipes = await PipeModel.find({})
@@ -68,7 +75,7 @@ class PipeService {
     return pipes
   }
   async createPipe(location, title, user_id) {
-    const pipe = await PipeModel.create({location})
+    const pipe = await PipeModel.create({location, title})
     const user = await UserModel.findById(user_id)
     //console.log(pipe)
     // if (user.pipe[0] == pipe._id) {
@@ -78,7 +85,7 @@ class PipeService {
     pipe.users.push(user._id)
     await UserModel.findByIdAndUpdate(user._id, user)
     await PipeModel.findByIdAndUpdate(pipe._id, pipe)
-    //console.log(user)
+    console.log(pipe)
     return pipe
   }
   async newMember(pipe_id, user_id) {
