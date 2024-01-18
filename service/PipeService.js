@@ -51,6 +51,7 @@ class PipeService {
       magnetogramMonth = magnetogramData.info[0].date.getMonth()
       data[magnetogramMonth].defects += magnetogramData.info[0].defects_count
     }
+    console.log(data)
     return data
   }
   async getPipeByUserId(user_id) {

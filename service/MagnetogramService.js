@@ -2,12 +2,12 @@ import ApiError from '../exceptions/api-error.js';
 import MagnetogramModel from '../models/MagnetogramModel.js'
 import PipeService from './PipeService.js';
 class MagnetogramService {
-  async getMagnetogram(id) {
-    const magnetogram = await MagnetogramModel.findById(id);
-    if (!magnetogram) {
-      throw ApiError.BadRequest('Не найдена магнитограмма')
+  async getPipeMagnetograms(pipe_id) {
+    const pipe = await PipeService.getPipe(pipe_id);
+    if (!pipe.magnetograms) {
+      throw ApiError.BadRequest('У трубы нет магнитограмм')
     }
-    return magnetogram
+    return pipe.magnetograms
   }
   async getAllMagnetograms() {
     const pipes = await MagnetogramModel.find({});

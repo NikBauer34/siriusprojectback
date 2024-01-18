@@ -6,6 +6,7 @@ const MagnetogramRouter = new Router()
 MagnetogramRouter.post('/create_magnetogram', authMiddleware, MagnetogramController.createMagnetogram)
 MagnetogramRouter.get('/get_magnetogram/:id', authMiddleware, MagnetogramController.getMagnetogram)
 MagnetogramRouter.get('/get_magnetograms', authMiddleware, MagnetogramController.getAllMagnetograms)
+MagnetogramRouter.get('/get_pipe_magnetograms', authMiddleware, MagnetogramController.getPipeMagnitograms)
 MagnetogramRouter.delete('/delete_magnetogram/:id', authMiddleware, MagnetogramController.deleteMagnetogram)
 
 export default MagnetogramRouter;
