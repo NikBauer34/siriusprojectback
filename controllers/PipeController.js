@@ -23,9 +23,13 @@ class PipeController {
     return res.json(pipe)
   }
   async getPipeStatistics(req, res, next) {
-    const {pipe_id} = req.body
-    const data = await PipeService.getPipeStatistics(pipe_id)
-    return res.json(data)
+    try {
+      const id = req.params.id
+      const data = await PipeService.getPipeStatistics(id)
+      return res.json(data)
+    } catch (e) {
+      next(e)
+    }
   }
   async getPipe(req, res, next) {
     try {

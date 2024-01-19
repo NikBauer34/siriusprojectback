@@ -27,6 +27,8 @@ class PipeService {
     return pipe
   }
   async getPipeStatistics(pipe_id) {
+    console.log('data')
+    console.log(pipe_id)
     const pipe = await PipeModel.findById(pipe_id)
     if (!pipe) {
       throw ApiError.BadRequest('Не найдена труба')

@@ -9,6 +9,13 @@ class MagnetogramService {
     }
     return pipe.magnetograms
   }
+  async getMagnetogram(id) {
+    const magnetogram = await MagnetogramModel.findById(id)
+    if (magnetogram) {
+      throw ApiError.BadRequest('Не найдена магнитограмма')
+    }
+    return magnetogram
+  }
   async getAllMagnetograms() {
     const pipes = await MagnetogramModel.find({});
     if (!pipes) {
