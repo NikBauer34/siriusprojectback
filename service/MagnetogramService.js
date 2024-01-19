@@ -9,14 +9,27 @@ class MagnetogramService {
     }
     let magnetogramArray;
     for (let magnetogram of pipe.magnetograms) {
-      let magnetogramItem = await MagnetogramModel.findById(magnetogram)
+      let magnetogramItem = await MagnetogramModel.findById(magnetogram, '-info')
       magnetogramArray.push(magnetogramItem)
     }
     return magnetogramArray
   }
+  async getMagnetogramMarkupData(magnetogram_id, page, bundle) {
+    let magnetogramItem = await MagnetogramModel.findById(magnetogram_id, 'info')
+    if (!magnetogramItem) {
+      throw ApiError.BadRequest('Не найдена магнитограмма')
+    }
+    return magnetogramItem.info[0].markup.splice((page - 1) * bundle, (page - 1) * bundle + bundle)
+  }
+  async getMagnitogramVersionsData(magnetogram_id) {
+    let magnetogramItem = await MagnetogramModel.findById(magnetogram_id, 'info')
+    if (!magnetogramItem) {
+      throw ApiError.BadRequest('Не найдена магнитограмма')
+    }
+  }
   async getMagnetogram(id) {
     const magnetogram = await MagnetogramModel.findById(id)
-    if (magnetogram) {
+    if (!magnetogram) {
       throw ApiError.BadRequest('Не найдена магнитограмма')
     }
     return magnetogram
