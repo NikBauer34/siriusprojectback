@@ -12,8 +12,8 @@ class MagnetogramController {
   }
   async getPipeMagnitograms(req, res, next) {
     try {
-      const {pipe_id} = req.body
-      const magnetograms = await MagnetogramService.getPipeMagnetograms(pipe_id)
+      const id = req.params.id
+      const magnetograms = await MagnetogramService.getPipeMagnetograms(id)
       return res.json(magnetograms)
     } catch (e) {
       next(e)
