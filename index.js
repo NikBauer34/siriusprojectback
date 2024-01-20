@@ -8,11 +8,14 @@ import router from "./router/routing.js";
 import errorMiddleware from "./middlewares/error-middleware.js";
 import swaggerJSDoc from 'swagger-jsdoc'
 import swaggerUI from 'swagger-ui-express'
+import fileupload from 'express-fileupload'
 const PORT = process.env.PORT || 5000;
 const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(fileupload())
+app.use(express.static())
 const corsOptions ={
   origin: process.env.CLIENT_URL,
   credentials:true,            //access-control-allow-credentials:true
@@ -36,6 +39,7 @@ const swaggerOptions = {
 app.use(cors(corsOptions));
 app.use('/', router)
 app.use(errorMiddleware)
+app.use(ex)
 
 const start = async () => {
   try {

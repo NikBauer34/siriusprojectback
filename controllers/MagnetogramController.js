@@ -1,3 +1,4 @@
+import AxiosService from "../service/AxiosService.js"
 import MagnetogramService from "../service/MagnetogramService.js"
 import TokenService from "../service/TokenService.js"
 class MagnetogramController {
@@ -30,9 +31,11 @@ class MagnetogramController {
   async createMagnetogram(req, res, next) {
     try {
       const {pipe_id, version, title} = req.body
+      const {file} = req.files
       const authorizationHeader = req.headers.authorization;
       const accessToken = authorizationHeader.split(' ')[1];
       const userData = TokenService.validateAccessToken(accessToken);
+      const markup = await AxiosService.getMarkup(file, file.name)
       const magnetogram = await MagnetogramService.createMagnetogram(userData.user_id, pipe_id, version, title)
       return res.json(magnetogram)
     } catch (e) {
