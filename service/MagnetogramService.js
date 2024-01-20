@@ -7,11 +7,14 @@ class MagnetogramService {
     if (!pipe.magnetograms) {
       throw ApiError.BadRequest('У трубы нет магнитограмм')
     }
-    let magnetogramArray;
+    console.log('pipe')
+    console.log(pipe)
+    let magnetogramArray = [];
     for (let magnetogram of pipe.magnetograms) {
       let magnetogramItem = await MagnetogramModel.findById(magnetogram, '-info')
       magnetogramArray.push(magnetogramItem)
     }
+    console.log(magnetogramArray)
     return magnetogramArray
   }
   async getMagnetogramMarkupData(magnetogram_id, page, bundle) {
