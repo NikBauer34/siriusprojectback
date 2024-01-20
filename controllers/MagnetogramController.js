@@ -44,8 +44,8 @@ class MagnetogramController {
   }
   async getMagnetogramMarkupData(req, res, next) {
     try {
-      const {id, page, bundle} = req.params
-      const markup = await MagnetogramService.getMagnetogramMarkupData(id, page, bundle)
+      const {id, page, bundle, i} = req.params
+      const markup = await MagnetogramService.getMagnetogramMarkupData(id, page, bundle, i)
       return res.json(markup)
     } catch (e) {
 

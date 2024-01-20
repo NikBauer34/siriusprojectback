@@ -18,19 +18,20 @@ class MagnetogramService {
     console.log(magnetogramArray)
     return magnetogramArray
   }
-  async getMagnetogramMarkupData(magnetogram_id, page, bundle) {
+  async getMagnetogramMarkupData(magnetogram_id, page, bundle, i) {
+    console.log('Here')
     let magnetogramItem = await MagnetogramModel.findById(magnetogram_id, 'info')
     if (!magnetogramItem) {
       throw ApiError.BadRequest('Не найдена магнитограмма')
     }
-    magnetogramItem = [0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0,]
-    return magnetogramItem.info[0].markup.splice((page - 1) * bundle, (page - 1) * bundle + bundle)
+    return magnetogramItem.info[i].markup.splice((page - 1) * bundle, (page - 1) * bundle + bundle)
   }
   async getMagnitogramVersionsData(magnetogram_id) {
     let magnetogramItem = await MagnetogramModel.findById(magnetogram_id, 'info')
     if (!magnetogramItem) {
       throw ApiError.BadRequest('Не найдена магнитограмма')
     }
+    return 
   }
   async getMagnetogram(id) {
     const magnetogram = await MagnetogramModel.findById(id)
