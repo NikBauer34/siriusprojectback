@@ -1,4 +1,4 @@
-import { Router } from "express";
+    import { Router } from "express";
 import UserController from "../controllers/UserController.js";
 import roleMiddleware from "../middlewares/role-middleware.js";
 import authMiddleware from "../middlewares/auth-middleware.js";
