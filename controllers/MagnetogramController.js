@@ -42,6 +42,17 @@ class MagnetogramController {
       next(e)
     }
   }
+  async getMagnetogramMarkupData(req, res, next) {
+    try {
+      const {id, page, bundle} = req.params
+      const markup = await MagnetogramService.getMagnetogramMarkupData(id, page, bundle)
+      return res.json(markup)
+    } catch (e) {
+
+    } finally {
+
+    }
+  }
   async deleteMagnetogram(req, res, next) {
     try {
       const id = req.params.id

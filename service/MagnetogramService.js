@@ -64,5 +64,12 @@ class MagnetogramService {
     const new_pipe = await PipeModel.findByIdAndUpdate(pipe._id, pipe)
     return magnetogram
   }
+  async getMagnetogramMarkupData(id, page, bundle) {
+    const magnetogram = await MagnetogramModel.findById(id, 'info')
+    if (!magnetogram) {
+      throw ApiError.BadRequest('Не найдена магнитограмма')
+    }
+    
+  }
 }
 export default new MagnetogramService()
