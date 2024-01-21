@@ -44,13 +44,31 @@ class MagnetogramController {
   }
   async getMagnetogramMarkupData(req, res, next) {
     try {
-      const {id, page, bundle, i} = req.params
-      const markup = await MagnetogramService.getMagnetogramMarkupData(id, page, bundle, i)
+      const {id, i} = req.query
+      console.log(id, i)
+      const markup = await MagnetogramService.getMagnetogramMarkupData(id, i)
       return res.json(markup)
     } catch (e) {
-
-    } finally {
-
+      next(e)
+    } 
+  }
+  async getMagnetogramVersionsData(req, res, next) {
+    try {
+      const id = req.params.id
+      const magnetograms = await MagnetogramService.getMagnetogramVersionsData(id)
+      return res.json(magnetograms)
+    } catch (e) {
+      next(e)
+    }
+  }
+  async getPipeMagnetogramsByTitle(req, res, next) {
+    try {
+      const {pipe_id, title} = req.query
+      console.log(id, i)
+      const markup = await MagnetogramService.getPipeMagnetogramsByTitle(pipe_id, title)
+      return res.json(markup)
+    } catch (e) {
+      next(e)
     }
   }
   async deleteMagnetogram(req, res, next) {

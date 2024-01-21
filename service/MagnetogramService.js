@@ -5,8 +5,8 @@ import PipeService from './PipeService.js';
 class MagnetogramService {
   async getPipeMagnetograms(pipe_id) {
     const pipe = await PipeService.getPipe(pipe_id);
-    if (!pipe.magnetograms) {
-      throw ApiError.BadRequest('У трубы нет магнитограмм')
+    if (!pipe) {
+      throw ApiError.BadRequest('Труба не найдена')
     }
     console.log('pipe')
     console.log(pipe)
@@ -18,20 +18,34 @@ class MagnetogramService {
     console.log(magnetogramArray)
     return magnetogramArray
   }
-  async getMagnetogramMarkupData(magnetogram_id, page, bundle, i) {
-    console.log('Here')
-    let magnetogramItem = await MagnetogramModel.findById(magnetogram_id, 'info')
+  async getMagnetogramMarkupData(id, i) {
+    let magnetogramItem = await MagnetogramModel.findById(id, 'info')
     if (!magnetogramItem) {
       throw ApiError.BadRequest('Не найдена магнитограмма')
     }
-    return magnetogramItem.info[i].markup.splice((page - 1) * bundle, (page - 1) * bundle + bundle)
+    return magnetogramItem.info[i]
   }
-  async getMagnitogramVersionsData(magnetogram_id) {
+  async getMagnetogramVersionsData(magnetogram_id) {
     let magnetogramItem = await MagnetogramModel.findById(magnetogram_id, 'info')
     if (!magnetogramItem) {
       throw ApiError.BadRequest('Не найдена магнитограмма')
     }
-    return 
+    return magnetogramItem.info
+  }
+  async getPipeMagnetogramsByTitle(pipe_id, title) {
+    const pipe = await PipeService.getPipe(pipe_id);
+    if (!pipe) {
+      throw ApiError.BadRequest('Труба не найдена')
+    }
+    console.log('pipe')
+    console.log(pipe)
+    let magnetogramArray = [];
+    for (let magnetogram of pipe.magnetograms) {
+      let magnetogramItem = await MagnetogramModel.findById(magnetogram, '-info')
+      if (magnetogramItem.title.includes(title)) {
+        magnetogramArray.push(magnetogramItem)
+      }
+    }
   }
   async getMagnetogram(id) {
     const magnetogram = await MagnetogramModel.findById(id)
@@ -41,7 +55,7 @@ class MagnetogramService {
     return magnetogram
   }
   async getAllMagnetograms() {
-    const pipes = await MagnetogramModel.find({});
+    const pipes = await MagnetogramModel.find({"title": { "$regex": "Первая"}});
     if (!pipes) {
       throw ApiError.BadRequest('Магнитограмм нет')
     }
@@ -64,13 +78,6 @@ class MagnetogramService {
     const pipe = await PipeModel.find({magnetograms: {"$in": [magnetogram._id]}})
     const new_pipe = await PipeModel.findByIdAndUpdate(pipe._id, pipe)
     return magnetogram
-  }
-  async getMagnetogramMarkupData(id, page, bundle) {
-    const magnetogram = await MagnetogramModel.findById(id, 'info')
-    if (!magnetogram) {
-      throw ApiError.BadRequest('Не найдена магнитограмма')
-    }
-    
   }
 }
 export default new MagnetogramService()
