@@ -9,6 +9,6 @@ export default class UserDto {
     this.name = model.name;
     this.surname = model.surname;
     this.nikname = model.nikname;
-    this.role = model.role
+    this.role = model.role;
   }
 }

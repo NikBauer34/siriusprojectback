@@ -22,7 +22,7 @@ class PipeService {
     pipe.users.push(user_id)
     user.pipes.push(pipe_id)
     await PipeModel.findByIdAndUpdate(pipe_id, pipe),
-    await UserModel.findByIdAndUpdate(user_id, user)
+      await UserModel.findByIdAndUpdate(user_id, user)
     console.log(user, pipe)
     return pipe
   }
@@ -34,18 +34,18 @@ class PipeService {
       throw ApiError.BadRequest('Не найдена труба')
     }
     const data = [
-      {month: 'Январь', defects: 0},
-      {month: 'Февраль', defects: 0},
-      {month: 'Март', defects: 0},
-      {month: 'Апрель', defects: 0},
-      {month: 'Май', defects: 0},
-      {month: 'Июнь', defects: 0},
-      {month: 'Июль', defects: 0},
-      {month: 'Август', defects: 0},
-      {month: 'Сентябрь', defects: 0},
-      {month: 'Октябрь', defects: 0},
-      {month: 'Ноябрь', defects: 0},
-      {month: 'Декабрь', defects: 0}
+      { month: 'Январь', defects: 0 },
+      { month: 'Февраль', defects: 0 },
+      { month: 'Март', defects: 0 },
+      { month: 'Апрель', defects: 0 },
+      { month: 'Май', defects: 0 },
+      { month: 'Июнь', defects: 0 },
+      { month: 'Июль', defects: 0 },
+      { month: 'Август', defects: 0 },
+      { month: 'Сентябрь', defects: 0 },
+      { month: 'Октябрь', defects: 0 },
+      { month: 'Ноябрь', defects: 0 },
+      { month: 'Декабрь', defects: 0 }
     ]
     let magnetogramData, magnetogramMonth;
     for (let magnetogram of pipe.magnetograms) {
@@ -71,7 +71,7 @@ class PipeService {
     console.log(userpipes)
     return userpipes
   }
-  async getAllPipes(){
+  async getAllPipes() {
     const pipes = await PipeModel.find({})
     if (!pipes) {
       throw ApiError.BadRequest('Не найдены трубы')
@@ -79,7 +79,7 @@ class PipeService {
     return pipes
   }
   async createPipe(location, title, user_id) {
-    const pipe = await PipeModel.create({location, title, magnetograms: [], users: []})
+    const pipe = await PipeModel.create({ location, title, magnetograms: [], users: [] })
     const user = await UserModel.findById(user_id)
     //console.log(pipe)
     // if (user.pipe[0] == pipe._id) {

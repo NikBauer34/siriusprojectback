@@ -18,7 +18,7 @@ class RequestService {
     return user.requests
   }
   async createRequest(to, author, title, text, magnetogram) {
-    const user = await UserModel.findOne({nikname: to})
+    const user = await UserModel.findOne({ nikname: to })
     const recipient_id = user._id
     const recipient = await UserModel.findById(recipient_id);
     if (!recipient) {
@@ -27,7 +27,7 @@ class RequestService {
     if (recipient.role != 'вторая ступень') {
       throw ApiError.BadRequest('Нельзя отправлять реквесты пользователям ниже второй ступени')
     }
-    const request = await RequestModel.create({title, text, magnetogram, author})
+    const request = await RequestModel.create({ title, text, magnetogram, author })
     recipient.requests.push(request._id)
     const new_request = await RequestModel.findByIdAndUpdate(recipient_id, recipient)
     return new_request

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import authMiddleware from '../middlewares/auth-middleware.js'
 import MagnetogramController from "../controllers/MagnetogramController.js";
-const MagnetogramRouter = new Router()
+const MagnetogramRouter = new Router();
 
 MagnetogramRouter.post('/create_magnetogram', authMiddleware, MagnetogramController.createMagnetogram)
 MagnetogramRouter.get('/get_magnetogram/:id', authMiddleware, MagnetogramController.getMagnetogram)

@@ -32,11 +32,11 @@ class UserController {
       next(e);
     }
   }
-  async RoleCheck(req, res, next) {
-    res.json({ mess: 'Если ты это видишь, то у тебя "вторая ступень"' })
-  }
-  async AuthCheck(req, res, next) {
-    res.json({ mess: 'Если ты это видишь, то ты авторизован' })
-  }
+  // async RoleCheck(req, res, next) {
+  //   res.json({ mess: 'Если ты это видишь, то у тебя "вторая ступень"' })
+  // }
+  // async AuthCheck(req, res, next) {
+  //   res.json({ mess: 'Если ты это видишь, то ты авторизован' })
+  // }
 }
 export default new UserController();

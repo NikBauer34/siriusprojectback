@@ -3,7 +3,7 @@ import TokenService from "../service/TokenService.js";
 class PipeController {
   async createPipe(req, res, next) {
     try {
-      const {location, title} = req.body
+      const { location, title } = req.body
       console.log(location)
       const authorizationHeader = req.headers.authorization;
       const accessToken = authorizationHeader.split(' ')[1];
@@ -15,7 +15,7 @@ class PipeController {
     }
   }
   async newUserPipe(req, res, next) {
-    const {_id} = req.body
+    const { _id } = req.body
     const authorizationHeader = req.headers.authorization;
     const accessToken = authorizationHeader.split(' ')[1];
     const userData = TokenService.validateAccessToken(accessToken);
@@ -75,12 +75,12 @@ class PipeController {
   }
   async getAllPipes(req, res, next) {
     try {
-    const pipes = await PipeService.getAllPipes()
-    return res.json(pipes)
+      const pipes = await PipeService.getAllPipes()
+      return res.json(pipes)
     } catch (e) {
       next(e)
     }
   }
 
 }
-export default new PipeController()
+export default new PipeController();
