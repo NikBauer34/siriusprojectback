@@ -35,7 +35,7 @@ class MagnetogramController {
       const authorizationHeader = req.headers.authorization;
       const accessToken = authorizationHeader.split(' ')[1];
       const userData = TokenService.validateAccessToken(accessToken);
-      const markup = await AxiosService.getMarkup(file, file.name)
+      // const markup = await AxiosService.getMarkup(file, file.name) 
       const magnetogram = await MagnetogramService.createMagnetogram(userData.user_id, pipe_id, version, title)
       return res.json(magnetogram)
     } catch (e) {
