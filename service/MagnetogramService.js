@@ -32,6 +32,17 @@ class MagnetogramService {
     }
     return magnetogramItem.info
   }
+  async getMagnetogramVersionsComparison(magnetogram_id, first_version, second_version) {
+    let magnetogramItem = await MagnetogramModel.findById(magnetogram_id, 'info')
+    if (!magnetogramItem) {
+      throw ApiError.BadRequest('Не найдена магнитограмма')
+    }
+    let magnetogramData = {
+      "first_version": magnetogramItem.info[first_version],
+      "second_version": magnetogramItem.info[second_version]
+    }
+    return JSON.stringify(magnetogramData)
+  }
   async getPipeMagnetogramsByTitle(pipe_id, title) {
     const pipe = await PipeService.getPipe(pipe_id);
     if (!pipe) {

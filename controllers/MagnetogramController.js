@@ -61,6 +61,15 @@ class MagnetogramController {
       next(e)
     }
   }
+  async getMagnetogramVersionsComparison(req, res, next) {
+    try {
+      const {id, first_version, second_version} = req.query
+      const magnetograms = await MagnetogramService.getMagnetogramVersionsComparison(id, first_version, second_version)
+      return res.json(magnetograms)
+    } catch(e) {
+      next(e)
+    }
+  }
   async getPipeMagnetogramsByTitle(req, res, next) {
     try {
       const {pipe_id, title} = req.query
