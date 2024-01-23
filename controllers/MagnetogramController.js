@@ -80,6 +80,16 @@ class MagnetogramController {
       next(e)
     }
   }
+  async createMagnetogramVersion(req, res, next) {
+    try {
+      const {id, version, markup} = req.body
+      console.log(id, version, markup)
+      const magnetogram = await MagnetogramService.createMagnetogramVersion(id, version, markup)
+      return res.json(magnetogram)
+    } catch (e) {
+      next(e)
+    }
+  }
   async deleteMagnetogram(req, res, next) {
     try {
       const id = req.params.id

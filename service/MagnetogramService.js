@@ -41,7 +41,26 @@ class MagnetogramService {
       "first_version": magnetogramItem.info[first_version],
       "second_version": magnetogramItem.info[second_version]
     }
-    return JSON.stringify(magnetogramData)
+    console.log(magnetogramData)
+    return magnetogramData
+  }
+  async createMagnetogramVersion(magnetogram_id, version, markup) {
+    let magnetogramItem = await MagnetogramModel.findById(magnetogram_id)
+    if (!magnetogramItem) {
+      throw ApiError.BadRequest('Не найдена магнитограмма')
+    }
+    console.log(markup)
+    let defects_count = 0
+    markup.forEach(el => el == 1 ? defects_count++ : false)
+    console.log(defects_count)
+    magnetogramItem.info.push({
+      version,
+      markup,
+      defects_count,
+      date: new Date()
+    })
+    let new_magnetogram = await MagnetogramModel.findByIdAndUpdate(magnetogramItem._id, magnetogramItem)
+    return new_magnetogram
   }
   async getPipeMagnetogramsByTitle(pipe_id, title) {
     const pipe = await PipeService.getPipe(pipe_id);
