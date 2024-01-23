@@ -1,7 +1,7 @@
 import UserDto from "../dtos/UserDto.js";
 import ApiError from "../exceptions/api-error.js";
 import UserModel from "../models/UserModel.js";
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcrypt';
 import TokenService from "./TokenService.js";
 
 class UserService {
@@ -59,4 +59,4 @@ class UserService {
     return user._id
   }
 }
-export default new UserService()
+export default new UserService();

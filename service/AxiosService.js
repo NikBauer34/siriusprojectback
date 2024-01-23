@@ -8,4 +8,4 @@ class AxiosService {
         return response
     }
 }
-export default new AxiosService()
+export default new AxiosService();

@@ -66,7 +66,7 @@ class MagnetogramService {
     return magnetogram
   }
   async getAllMagnetograms() {
-    const pipes = await MagnetogramModel.find({"title": { "$regex": "Первая"}});
+    const pipes = await MagnetogramModel.find({ "title": { "$regex": "Первая" } });
     if (!pipes) {
       throw ApiError.BadRequest('Магнитограмм нет')
     }
@@ -77,7 +77,7 @@ class MagnetogramService {
     let defects_count = 0
     true_markup.forEach(el => el == 1 ? defects_count++ : false)
     console.log(defects_count)
-    const magnetogram = await MagnetogramModel.create({title, info: [{version, markup: true_markup, defects_count, date: new Date()}], author, pipe: pipe_id})
+    const magnetogram = await MagnetogramModel.create({ title, info: [{ version, markup: true_markup, defects_count, date: new Date() }], author, pipe: pipe_id })
     const new_pipe = await PipeService.newMagnetogram(pipe_id, magnetogram._id)
     return magnetogram
   }
@@ -86,7 +86,7 @@ class MagnetogramService {
     if (!magnetogram) {
       throw ApiError.BadRequest('Не найдена магнитограмма')
     }
-    const pipe = await PipeModel.find({magnetograms: {"$in": [magnetogram._id]}})
+    const pipe = await PipeModel.find({ magnetograms: { "$in": [magnetogram._id] } })
     const new_pipe = await PipeModel.findByIdAndUpdate(pipe._id, pipe)
     return magnetogram
   }

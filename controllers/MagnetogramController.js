@@ -1,6 +1,6 @@
-import AxiosService from "../service/AxiosService.js"
-import MagnetogramService from "../service/MagnetogramService.js"
-import TokenService from "../service/TokenService.js"
+import AxiosService from "../service/AxiosService.js";
+import MagnetogramService from "../service/MagnetogramService.js";
+import TokenService from "../service/TokenService.js";
 class MagnetogramController {
   async getMagnetogram(req, res, next) {
     try {
@@ -30,8 +30,8 @@ class MagnetogramController {
   }
   async createMagnetogram(req, res, next) {
     try {
-      const {pipe_id, version, title} = req.body
-      const {file} = req.files
+      const { pipe_id, version, title } = req.body
+      const { file } = req.files
       const authorizationHeader = req.headers.authorization;
       const accessToken = authorizationHeader.split(' ')[1];
       const userData = TokenService.validateAccessToken(accessToken);
@@ -44,13 +44,13 @@ class MagnetogramController {
   }
   async getMagnetogramMarkupData(req, res, next) {
     try {
-      const {id, i} = req.query
+      const { id, i } = req.query
       console.log(id, i)
       const markup = await MagnetogramService.getMagnetogramMarkupData(id, i)
       return res.json(markup)
     } catch (e) {
       next(e)
-    } 
+    }
   }
   async getMagnetogramVersionsData(req, res, next) {
     try {
@@ -72,7 +72,7 @@ class MagnetogramController {
   }
   async getPipeMagnetogramsByTitle(req, res, next) {
     try {
-      const {pipe_id, title} = req.query
+      const { pipe_id, title } = req.query
       console.log(id, i)
       const markup = await MagnetogramService.getPipeMagnetogramsByTitle(pipe_id, title)
       return res.json(markup)
@@ -90,4 +90,4 @@ class MagnetogramController {
     }
   }
 }
-export default new MagnetogramController()
+export default new MagnetogramController();

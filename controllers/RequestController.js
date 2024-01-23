@@ -23,7 +23,7 @@ class RequestController {
   }
   async createRequest(req, res, next) {
     try {
-      const {to, title, text, magnetogram} = req.body;
+      const { to, title, text, magnetogram } = req.body;
       const authorizationHeader = req.headers.authorization;
       const accessToken = authorizationHeader.split(' ')[1];
       const userData = TokenService.validateAccessToken(accessToken);
