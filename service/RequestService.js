@@ -1,6 +1,6 @@
-import ApiError from '../exceptions/api-error.js'
-import RequestModel from '../models/RequestModel.js'
-import UserModel from '../models/UserModel.js'
+import ApiError from '../exceptions/api-error.js';
+import RequestModel from '../models/RequestModel.js';
+import UserModel from '../models/UserModel.js';
 class RequestService {
   async getRequest(request_id) {
     const request = await RequestModel.findById(request_id)
@@ -24,13 +24,10 @@ class RequestService {
     if (!recipient) {
       throw ApiError.BadRequest('Не найден пользователь')
     }
-    if (recipient.role != 'вторая ступень') {
-      throw ApiError.BadRequest('Нельзя отправлять реквесты пользователям ниже второй ступени')
-    }
     const request = await RequestModel.create({ title, text, magnetogram, author })
     recipient.requests.push(request._id)
     const new_request = await RequestModel.findByIdAndUpdate(recipient_id, recipient)
     return new_request
   }
 }
-export default new RequestService()
+export default new RequestService();
