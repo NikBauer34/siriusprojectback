@@ -35,9 +35,38 @@ class MagnetogramController {
       const authorizationHeader = req.headers.authorization;
       const accessToken = authorizationHeader.split(' ')[1];
       const userData = TokenService.validateAccessToken(accessToken);
-      // const markup = await AxiosService.getMarkup(file, file.name) 
+      // const markup = await AxiosService.getMarkup(file, file.name)
       const magnetogram = await MagnetogramService.createMagnetogram(userData.user_id, pipe_id, version, title)
       return res.json(magnetogram)
+    } catch (e) {
+      next(e)
+    }
+  }
+  async getMagnetogramMarkupData(req, res, next) {
+    try {
+      const {id, i} = req.query
+      console.log(id, i)
+      const markup = await MagnetogramService.getMagnetogramMarkupData(id, i)
+      return res.json(markup)
+    } catch (e) {
+      next(e)
+    } 
+  }
+  async getMagnetogramVersionsData(req, res, next) {
+    try {
+      const id = req.params.id
+      const magnetograms = await MagnetogramService.getMagnetogramVersionsData(id)
+      return res.json(magnetograms)
+    } catch (e) {
+      next(e)
+    }
+  }
+  async getPipeMagnetogramsByTitle(req, res, next) {
+    try {
+      const {pipe_id, title} = req.query
+      console.log(id, i)
+      const markup = await MagnetogramService.getPipeMagnetogramsByTitle(pipe_id, title)
+      return res.json(markup)
     } catch (e) {
       next(e)
     }

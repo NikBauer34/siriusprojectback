@@ -51,6 +51,7 @@ class PipeService {
     for (let magnetogram of pipe.magnetograms) {
       magnetogramData = await MagnetogramService.getMagnetogram(magnetogram)
       magnetogramMonth = magnetogramData.info[0].date.getMonth()
+      console.log(magnetogramMonth)
       data[magnetogramMonth].defects += magnetogramData.info[0].defects_count
     }
     console.log(data)
@@ -78,7 +79,7 @@ class PipeService {
     return pipes
   }
   async createPipe(location, title, user_id) {
-    const pipe = await PipeModel.create({location, title})
+    const pipe = await PipeModel.create({location, title, magnetograms: [], users: []})
     const user = await UserModel.findById(user_id)
     //console.log(pipe)
     // if (user.pipe[0] == pipe._id) {
