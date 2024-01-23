@@ -30,7 +30,7 @@ class MagnetogramService {
     if (!magnetogramItem) {
       throw ApiError.BadRequest('Не найдена магнитограмма')
     }
-    return magnetogramItem.info
+    return magnetogramItem
   }
   async getMagnetogramVersionsComparison(magnetogram_id, first_version, second_version) {
     let magnetogramItem = await MagnetogramModel.findById(magnetogram_id, 'info')
