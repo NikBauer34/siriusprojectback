@@ -1,11 +1,18 @@
 import axios from "axios";
 import FormData from "form-data";
+import fs from 'node:fs'
 class AxiosService {
-    async getMarkup(file, file_name) {
+    async createMarkup(file, file_name) {
         const form = new FormData()
-        form.append('magnetogram', file, file_name)
-        const response = await axios.post(`${process.env.MODEL_URL}/get_markup`, form)
-        return response
+        console.log(file)
+        console.log(file_name)
+        form.append('file', 4)
+        const response = await axios.post(`${process.env.MODEL_API}/model`, form, {
+            headers: {
+                ...form.getHeaders()
+            }
+        })
+        console.log(response)
     }
 }
 export default new AxiosService();
