@@ -106,7 +106,9 @@ class PipeService {
     return pipe
   }
   async newMagnetogram(pipe_id, magnetogram_id) {
+    console.log(pipe_id)
     const pipe = await PipeModel.findById(pipe_id)
+    console.log(pipe)
     pipe.magnetograms.push(magnetogram_id)
     const new_pipe = await PipeModel.findByIdAndUpdate(pipe_id, pipe)
     return new_pipe
