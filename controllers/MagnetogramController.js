@@ -91,8 +91,11 @@ class MagnetogramController {
   }
   async createMagnetogramVersion(req, res, next) {
     try {
-      const {id, version, markup} = req.body
-      console.log(id, version, markup)
+      const {id, version} = req.body
+      const { file } = req.files
+      console.log(file)
+      console.log(id, version)
+      let markup = [0, 0, 1, 1, 0, 1]
       const magnetogram = await MagnetogramService.createMagnetogramVersion(id, version, markup)
       return res.json(magnetogram)
     } catch (e) {
