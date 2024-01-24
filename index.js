@@ -15,16 +15,16 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const PORT = process.env.PORT || 5000;
 const app = express();
-app.use(cors());
-app.use(express.json());
-app.use(cookieParser());
-app.use(express.static(path.resolve(__dirname, 'static')))
-app.use(fileUpload({}));
 const corsOptions = {
   origin: process.env.CLIENT_URL,
   credentials: true,            //access-control-allow-credentials:true
   optionSuccessStatus: 200,
 }
+app.use(cors(corsOptions));
+app.use(express.json());
+app.use(cookieParser());
+app.use(express.static(path.resolve(__dirname, 'static')))
+app.use(fileUpload({}));
 const swaggerOptions = {
   swaggerDefinition: {
     openapi: '3.0.0',
