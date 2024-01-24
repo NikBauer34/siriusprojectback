@@ -1,6 +1,11 @@
 import AxiosService from "../service/AxiosService.js";
 import MagnetogramService from "../service/MagnetogramService.js";
 import TokenService from "../service/TokenService.js";
+import { v4 as uuidv4 } from 'uuid';
+import path from 'path'
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 class MagnetogramController {
   async getMagnetogram(req, res, next) {
     try {
@@ -32,10 +37,14 @@ class MagnetogramController {
     try {
       const { pipe_id, version, title } = req.body
       const { file } = req.files
+      console.log(pipe_id, version, title)
+      console.log(file)
+      // let fileName = uuidv4() + '.html'
+      // file.mv(path.resolve(__dirname, '..', 'static', fileName))
       const authorizationHeader = req.headers.authorization;
       const accessToken = authorizationHeader.split(' ')[1];
       const userData = TokenService.validateAccessToken(accessToken);
-      // const markup = await AxiosService.getMarkup(file, file.name)
+      // // const markup = await AxiosService.getMarkup(file, file.name)
       const magnetogram = await MagnetogramService.createMagnetogram(userData.user_id, pipe_id, version, title)
       return res.json(magnetogram)
     } catch (e) {

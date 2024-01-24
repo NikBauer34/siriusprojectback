@@ -8,18 +8,18 @@ import router from "./router/routing.js";
 import errorMiddleware from "./middlewares/error-middleware.js";
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUI from 'swagger-ui-express';
-import fileupload from 'express-fileupload';
+import fileUpload from 'express-fileupload';
 import path from 'path';
 import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const PORT = process.env.PORT || 5000;
 const app = express();
-
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
-app.use(fileupload());
-app.use(express.static(__dirname + 'public'))
+app.use(express.static(path.resolve(__dirname, 'static')))
+app.use(fileUpload({}));
 const corsOptions = {
   origin: process.env.CLIENT_URL,
   credentials: true,            //access-control-allow-credentials:true
@@ -40,7 +40,6 @@ const swaggerOptions = {
 }
 // const swaggerSpec = swaggerJSDoc(swaggerOptions)
 // app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
-app.use(cors(corsOptions));
 app.use('/', router);
 app.use(errorMiddleware);
 
