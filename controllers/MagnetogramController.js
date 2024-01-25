@@ -39,17 +39,20 @@ class MagnetogramController {
       const { file } = req.files
       console.log(pipe_id, version, title)
       console.log(file)
-      let fileName = uuidv4() + '.pkl'
-      await file.mv(path.resolve(__dirname, '..', 'static', fileName))
+
       const authorizationHeader = req.headers.authorization;
       const accessToken = authorizationHeader.split(' ')[1];
       const userData = TokenService.validateAccessToken(accessToken);
+
+      let fileName = uuidv4() + '.pkl'
+      await file.mv(path.resolve(__dirname, '..', 'static', fileName))
+
       const markup = await AxiosService.createMarkup(file, fileName)
       console.warn('markup')
       console.log(markup.rez)
-      const response = await AxiosService.createCSV(markup.rez)
-      console.log(response)
-      const magnetogram = await MagnetogramService.createMagnetogram(userData.user_id, pipe_id, version, title)
+      const file_name = await AxiosService.createCSV(markup.rez)
+      console.log(file_name)
+      const magnetogram = await MagnetogramService.createMagnetogram(userData.user_id, pipe_id, version, title, markup.rez, file_name)
       return res.json(magnetogram)
     } catch (e) {
       next(e)
@@ -99,8 +102,13 @@ class MagnetogramController {
       const { file } = req.files
       console.log(file)
       console.log(id, version)
-      let markup = [0, 0, 1, 1, 0, 1]
-      const magnetogram = await MagnetogramService.createMagnetogramVersion(id, version, markup)
+
+      let fileName = uuidv4() + '.pkl'
+      await file.mv(path.resolve(__dirname, '..', 'static', fileName))
+
+      const markup = await AxiosService.createMarkup(file, fileName)
+      const file_name = await AxiosService.createCSV(markup.rez)
+      const magnetogram = await MagnetogramService.createMagnetogramVersion(id, version, markup.rez, file_name)
       return res.json(magnetogram)
     } catch (e) {
       next(e)

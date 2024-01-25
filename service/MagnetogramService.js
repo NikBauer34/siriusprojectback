@@ -23,6 +23,8 @@ class MagnetogramService {
     if (!magnetogramItem) {
       throw ApiError.BadRequest('Не найдена магнитограмма')
     }
+    console.log('Info here')
+    console.log(magnetogramItem.info[i])
     return magnetogramItem.info[i]
   }
   async getMagnetogramVersionsData(magnetogram_id) {
@@ -44,7 +46,7 @@ class MagnetogramService {
     console.log(magnetogramData)
     return magnetogramData
   }
-  async createMagnetogramVersion(magnetogram_id, version, markup) {
+  async createMagnetogramVersion(magnetogram_id, version, markup, file_name) {
     let magnetogramItem = await MagnetogramModel.findById(magnetogram_id)
     if (!magnetogramItem) {
       throw ApiError.BadRequest('Не найдена магнитограмма')
@@ -57,6 +59,7 @@ class MagnetogramService {
       version,
       markup,
       defects_count,
+      data_table: file_name,
       date: new Date()
     })
     let new_magnetogram = await MagnetogramModel.findByIdAndUpdate(magnetogramItem._id, magnetogramItem)
@@ -91,12 +94,12 @@ class MagnetogramService {
     }
     return pipes
   }
-  async createMagnetogram(author, pipe_id, version, title, markup) {
-    const true_markup = [0, 1, 0]
+  async createMagnetogram(author, pipe_id, version, title, markup, file_name) {
     let defects_count = 0
-    true_markup.forEach(el => el == 1 ? defects_count++ : false)
+    console.log(markup)
+    markup.forEach(el => el == 1 ? defects_count++ : false)
     console.log(defects_count)
-    const magnetogram = await MagnetogramModel.create({ title, info: [{ version, markup: true_markup, defects_count, date: new Date() }], author, pipe: pipe_id })
+    const magnetogram = await MagnetogramModel.create({ title, info: [{ version, markup, defects_count, data_table: file_name, date: new Date() }], author, pipe: pipe_id })
     const new_pipe = await PipeService.newMagnetogram(pipe_id, magnetogram._id)
     return magnetogram
   }

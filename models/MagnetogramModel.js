@@ -6,10 +6,11 @@ const MagnetogramSchema = new Schema({
     version: { type: String },
     markup: [{ type: Number }],
     defects_count: { type: Number },
-    date: { type: Date },
+    data_table: { type: String },
+    date: { type: Date }
   }],
   author: { type: Schema.Types.ObjectId, ref: 'User' },
-  pipe: { type: Schema.Types.ObjectId, ref: 'Pipe' }
+  pipe: { type: Schema.Types.ObjectId, ref: 'Pipe' },
 })
 
 export default model('Magnetogram', MagnetogramSchema);
