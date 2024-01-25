@@ -24,6 +24,8 @@
     "form-data": "^4.0.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.4",
+    "node-fetch": "^3.3.2",
+    "pandas-js": "^0.2.4",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",
     "uuid": "^9.0.1"
