@@ -25,22 +25,26 @@ app.use(express.json());
 app.use(fileUpload({}));
 app.use(express.static(path.resolve(__dirname, 'static')))
 app.use(cookieParser());
-const swaggerOptions = {
+app.use('/', router);const swaggerDefinition = {
   swaggerDefinition: {
     openapi: '3.0.0',
     info: {
       title: 'Node js api project for "Газпром"',
-      version: '1.0.0'
+      version: '1.0.0',
+      description:
+        'Сваггер для бэкенда сервиса выявления дефектов газопроводов'
     },
-    servers: {
-      url: process.env.API_URL + PORT
-    }
+    servers: [
+      {
+        url: process.env.API_URL,
+        description: process.env.NODE_ENV
+      }
+    ]
   },
-  apis: ['index.js']
+  apis: ['./router/*.js']
 }
-// const swaggerSpec = swaggerJSDoc(swaggerOptions)
-// app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
-app.use('/', router);
+const swaggerSpec = swaggerJSDoc(swaggerDefinition)
+app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 app.use(errorMiddleware);
 
 const start = async () => {
