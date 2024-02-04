@@ -25,7 +25,8 @@ app.use(express.json());
 app.use(fileUpload({}));
 app.use(express.static(path.resolve(__dirname, 'static')))
 app.use(cookieParser());
-app.use('/', router);const swaggerDefinition = {
+app.use('/', router);
+const swaggerDefinition = {
   swaggerDefinition: {
     openapi: '3.0.0',
     info: {
