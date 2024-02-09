@@ -16,11 +16,11 @@ const __dirname = path.dirname(__filename);
 const PORT = process.env.PORT || 5000;
 const app = express();
 const corsOptions = {
-  origin: '*',
+  origin: process.env.CLIENT_URL,
   credentials: true,            //access-control-allow-credentials:true
   optionSuccessStatus: 200,
 }
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(fileUpload({}));
 app.use(express.static(path.resolve(__dirname, 'static')))
