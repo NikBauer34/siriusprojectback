@@ -16,7 +16,7 @@ const __dirname = path.dirname(__filename);
 const PORT = process.env.PORT || 5000;
 const app = express();
 const corsOptions = {
-  origin: process.env.CLIENT_URL,
+  origin: '*',
   credentials: true,            //access-control-allow-credentials:true
   optionSuccessStatus: 200,
 }
